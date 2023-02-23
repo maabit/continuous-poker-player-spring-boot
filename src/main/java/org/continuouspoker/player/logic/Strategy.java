@@ -1,18 +1,37 @@
 package org.continuouspoker.player.logic;
 
-import org.continuouspoker.player.model.Bet;
-import org.continuouspoker.player.model.Card;
-import org.continuouspoker.player.model.Player;
-import org.continuouspoker.player.model.Table;
+import org.continuouspoker.player.model.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.Optional;
 
 public class Strategy {
+
+   enum Pair {
+      NONE,
+      DOUBLE,
+      DOUBLETROUBLE,
+      TRIPLE,
+      QUADRUPLE
+   }
+
+   public Pair findPair(List<Card> handCards, List<Card> communityCards){
+
+      int kind = 0;
+
+      String firstHandCard = handCards.get(0).getRank().getValue();
+      String secondHandCard = handCards.get(0).getRank().getValue();
+
+      if(firstHandCard.equals(secondHandCard)) kind++;
+
+      if(kind == 1) return Pair.DOUBLE;
+
+      return Pair.NONE;
+   }
+
+
 
    public Bet decide(final Table table) {
       System.out.println(table);
@@ -32,7 +51,7 @@ public class Strategy {
       Card firstCard = cards.get(0);
       Card secondCard = cards.get(1);
 
-
+      if(findPair(cards, communityCards)== Pair.DOUBLE) return new Bet().bet(table.getMinimumRaise());
 
       switch (firstCard.getRank().getValue()){
          case "A":
@@ -49,6 +68,7 @@ public class Strategy {
          case "J":
             return new Bet().bet(table.getMinimumBet());
       }
+      
       return new Bet().bet(0);
    }
 
