@@ -31,8 +31,6 @@ public class Strategy {
       return Pair.NONE;
    }
 
-
-
    public Bet decide(final Table table) {
       System.out.println(table);
 
@@ -53,7 +51,7 @@ public class Strategy {
 
       if(findPair(cards, communityCards)== Pair.DOUBLE) return new Bet().bet(table.getMinimumRaise());
 
-
+      if(table.getPot()/table.getMinimumBet() < 50) return new Bet().bet(0);
 
       switch (firstCard.getRank().getValue()){
          case "A":
