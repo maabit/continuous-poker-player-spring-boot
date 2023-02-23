@@ -53,6 +53,8 @@ public class Strategy {
 
       if(findPair(cards, communityCards)== Pair.DOUBLE) return new Bet().bet(table.getMinimumRaise());
 
+
+
       switch (firstCard.getRank().getValue()){
          case "A":
          case "K":
@@ -69,7 +71,7 @@ public class Strategy {
             return new Bet().bet(table.getMinimumBet());
       }
 
-      return new Bet().bet(0);
+      return new Bet().bet(player.get().getStack());
    }
 
 }
