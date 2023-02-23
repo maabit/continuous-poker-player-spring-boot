@@ -1,9 +1,11 @@
 package org.continuouspoker.player.logic;
 
-import org.continuouspoker.player.model.*;
+import org.continuouspoker.player.model.Bet;
+import org.continuouspoker.player.model.Card;
+import org.continuouspoker.player.model.Player;
+import org.continuouspoker.player.model.Table;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +28,15 @@ public class Strategy {
 
       if(firstHandCard.equals(secondHandCard)) kind++;
 
+      for(Card card : communityCards){
+         if(firstHandCard == card.getRank().getValue()) kind ++
+      }
+
       if(kind == 1) return Pair.DOUBLE;
+
+      if(kind == 2) return Pair.TRIPLE;
+
+      if(kind == 3) return  Pair.QUADRUPLE;
 
       return Pair.NONE;
    }
@@ -49,7 +59,12 @@ public class Strategy {
       Card firstCard = cards.get(0);
       Card secondCard = cards.get(1);
 
+      if(findPair(cards, communityCards)== Pair.QUADRUPLE) return new Bet().bet((int) (table.getMinimumRaise() + Math.floor(player.get().getStack() / 2)));
+
+      if(findPair(cards, communityCards)== Pair.TRIPLE) return new Bet().bet((int) (table.getMinimumRaise() + Math.floor(player.get().getStack() / 3)));
+
       if(findPair(cards, communityCards)== Pair.DOUBLE) return new Bet().bet(table.getMinimumRaise());
+
 
       if(table.getPot()/table.getMinimumBet() < 50) return new Bet().bet(0);
 
