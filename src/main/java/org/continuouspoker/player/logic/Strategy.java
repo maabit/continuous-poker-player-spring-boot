@@ -29,7 +29,7 @@ public class Strategy {
       if(firstHandCard.equals(secondHandCard)) kind++;
 
       for(Card card : communityCards){
-         if(firstHandCard == card.getRank().getValue()) kind ++
+         if(firstHandCard == card.getRank().getValue()) kind ++;
       }
 
       if(kind == 1) return Pair.DOUBLE;
