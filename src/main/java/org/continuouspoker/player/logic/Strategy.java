@@ -40,7 +40,7 @@ public class Strategy {
 
       List<Card> communityCards = table.getCommunityCards();
 
-      Optional<Player> player = table.getPlayers().stream().filter(p -> p.getName().equals("str8-flush")).findFirst();
+      Optional<Player> player = table.getPlayers().stream().filter(p -> p.getName().equals("Str8Flush")).findFirst();
 
       if(!player.isPresent()){
          return new Bet().bet(0);
@@ -68,7 +68,7 @@ public class Strategy {
          case "J":
             return new Bet().bet(table.getMinimumBet());
       }
-      
+
       return new Bet().bet(0);
    }
 
